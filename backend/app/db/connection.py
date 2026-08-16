@@ -1,14 +1,8 @@
 import psycopg
 
-from backend.app.core.config import settings
+from backend.app.core.config import DatabaseConfig
 
 
 def get_connection():
     """Create and return a PostgreSQL database connection."""
-    return psycopg.connect(
-        host=settings.DATABASE_HOST,
-        port=settings.DATABASE_PORT,
-        dbname=settings.DATABASE_NAME,
-        user=settings.DATABASE_USER,
-        password=settings.DATABASE_PASSWORD,
-    )
+    return psycopg.connect(**DatabaseConfig.connection_params())

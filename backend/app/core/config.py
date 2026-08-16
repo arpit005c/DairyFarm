@@ -1,26 +1,30 @@
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+load_dotenv(PROJECT_ROOT / ".env")
 
 
-class Settings:
-    DATABASE_HOST: str = os.getenv("DATABASE_HOST", "localhost")
-    DATABASE_PORT: int = int(os.getenv("DATABASE_PORT", "5432"))
-    DATABASE_NAME: str = os.getenv("DATABASE_NAME", "DairyFarmDB")
-    DATABASE_USER: str = os.getenv("DATABASE_USER", "postgres")
-    DATABASE_PASSWORD: str = os.getenv("DATABASE_PASSWORD", "")
+class DatabaseConfig:
+    """Application database configuration loaded from environment variables."""
 
-    @property
-    def database_url(self) -> str:
-        return (
-            f"postgresql://{self.DATABASE_USER}:"
-            f"{self.DATABASE_PASSWORD}@"
-            f"{self.DATABASE_HOST}:"
-            f"{self.DATABASE_PORT}/"
-            f"{self.DATABASE_NAME}"
-        )
+    HOST = os.getenv("DB_HOST", "localhost")
+    PORT = int(os.getenv("DB_PORT", "5432"))
+    NAME = os.getenv("DB_NAME", "DairyFarmDB")
+    USER = os.getenv("DB_USER", "postgres")
+    PASSWORD = os.getenv("DB_PASSWORD", "")
 
-
-settings = Settings()
+    @classmethod
+    def connection_params(cls) -> dict:
+        """Return PostgreSQL connection parameters."""
+        return {
+            "host": cls.HOST,
+            "port": cls.PORT,
+            "dbname": cls.NAME,
+            "user": cls.USER,
+            "password": cls.PASSWORD,
+        }
