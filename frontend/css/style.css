@@ -1,0 +1,592 @@
+/* =========================================================
+   DairyFarm
+   Phase 9 — CSS3 Styling
+   Step 9.1 — Global CSS Foundation
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Design Tokens
+   --------------------------------------------------------- */
+
+:root {
+    --color-primary: #2f6f4e;
+    --color-primary-dark: #24563d;
+    --color-secondary: #dfeee5;
+
+    --color-background: #f5f8f6;
+    --color-surface: #ffffff;
+
+    --color-text: #1f2933;
+    --color-muted: #667085;
+
+    --color-border: #d9e2dc;
+
+    --color-success: #2f855a;
+    --color-warning: #b7791f;
+    --color-danger: #c53030;
+
+    --shadow-sm: 0 2px 6px rgba(31, 41, 51, 0.08);
+    --shadow-md: 0 8px 20px rgba(31, 41, 51, 0.10);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+
+    --transition-fast: 160ms ease;
+}
+
+
+/* ---------------------------------------------------------
+   2. Global Reset / Box Model
+   --------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   3. Document
+   --------------------------------------------------------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   4. Basic Typography
+   --------------------------------------------------------- */
+
+h1,
+h2,
+h3 {
+    margin-top: 0;
+    line-height: 1.25;
+}
+
+
+h1 {
+    font-size: 2.25rem;
+}
+
+
+h2 {
+    font-size: 1.75rem;
+}
+
+
+h3 {
+    font-size: 1.25rem;
+}
+
+
+p {
+    margin-top: 0;
+}
+
+
+a {
+    color: var(--color-primary);
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* ---------------------------------------------------------
+   5. Basic Form Inheritance
+   --------------------------------------------------------- */
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* ---------------------------------------------------------
+   6. Keyboard Focus
+   --------------------------------------------------------- */
+
+:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   7. Page Header
+   --------------------------------------------------------- */
+
+header {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    margin-bottom: 1.5rem;
+}
+
+
+/* ---------------------------------------------------------
+   8. Navigation
+   --------------------------------------------------------- */
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    display: inline-block;
+    color: var(--color-surface);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+nav a:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+nav a:focus-visible {
+    outline-color: var(--color-surface);
+}
+
+
+/* ---------------------------------------------------------
+   9. Main Layout
+   --------------------------------------------------------- */
+
+main {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 2.5rem 0;
+}
+
+section {
+    margin-bottom: 2.5rem;
+}
+
+
+/* ---------------------------------------------------------
+   10. Welcome Section
+   --------------------------------------------------------- */
+
+section[aria-labelledby="welcome-heading"] {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+section[aria-labelledby="welcome-heading"] h2 {
+    color: var(--color-primary-dark);
+}
+
+
+/* ---------------------------------------------------------
+   11. Module Cards
+   --------------------------------------------------------- */
+
+section[aria-labelledby="modules-heading"] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+section[aria-labelledby="modules-heading"] > h2 {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+}
+
+article {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+article h3 {
+    color: var(--color-primary);
+}
+
+
+/* ---------------------------------------------------------
+   12. Footer
+   --------------------------------------------------------- */
+
+footer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--color-primary-dark);
+    color: var(--color-surface);
+    text-align: center;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   13. Responsive Layout
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    header {
+        padding: 1.5rem 1rem;
+    }
+
+    main {
+        width: min(94%, 600px);
+        padding: 2rem 0;
+    }
+
+    section[aria-labelledby="modules-heading"] {
+        grid-template-columns: 1fr;
+    }
+
+    section[aria-labelledby="modules-heading"] > h2 {
+        grid-column: auto;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    nav a {
+        display: block;
+    }
+}
+
+/* ---------------------------------------------------------
+   14. Forms
+   --------------------------------------------------------- */
+
+form {
+    margin-top: 1.5rem;
+}
+
+fieldset {
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+}
+
+legend {
+    padding: 0 0.5rem;
+    color: var(--color-primary-dark);
+    font-weight: 700;
+}
+
+form p {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-muted);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--color-primary);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(47, 111, 78, 0.12);
+    outline: none;
+}
+
+
+/* ---------------------------------------------------------
+   15. Form Validation States
+   --------------------------------------------------------- */
+
+input:required:invalid,
+select:required:invalid,
+textarea:required:invalid {
+    border-color: var(--color-danger);
+}
+
+input:required:valid,
+select:required:valid,
+textarea:required:valid {
+    border-color: var(--color-success);
+}
+
+
+/* ---------------------------------------------------------
+   16. Form Buttons
+   --------------------------------------------------------- */
+
+button {
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+button[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+button[type="reset"] {
+    margin-left: 0.5rem;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+button[type="reset"]:hover {
+    background-color: var(--color-border);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ---------------------------------------------------------
+   17. Form Responsive Layout
+   --------------------------------------------------------- */
+
+@media (min-width: 769px) {
+    form fieldset {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 1.5rem;
+    }
+
+    form legend {
+        grid-column: 1 / -1;
+    }
+
+    form fieldset > p {
+        margin: 0;
+    }
+
+    form fieldset > p:nth-last-child(1) {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   18. Small Screen Form Adjustments
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    fieldset {
+        padding: 1rem;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    button[type="reset"] {
+        margin-left: 0;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   19. Reduced Motion Accessibility
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   20. Utility & Feedback States
+   --------------------------------------------------------- */
+
+.form-message {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-message.error {
+    color: var(--color-danger);
+}
+
+.form-message.success {
+    color: var(--color-success);
+}
+
+.input-error {
+    border-color: var(--color-danger) !important;
+}
+
+.input-success {
+    border-color: var(--color-success) !important;
+}
+
+
+/* ---------------------------------------------------------
+   21. Module Spacing
+   --------------------------------------------------------- */
+
+article + article {
+    margin-top: 0;
+}
+
+article p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------------------------------------------------------
+   22. Better Touch Targets
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    nav a,
+    button {
+        min-height: 44px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   23. Print Styles
+   --------------------------------------------------------- */
+
+@media print {
+    header {
+        background-color: transparent;
+        color: #000000;
+        box-shadow: none;
+    }
+
+    nav,
+    button {
+        display: none;
+    }
+
+    main {
+        width: 100%;
+        padding: 0;
+    }
+
+    article,
+    section[aria-labelledby="welcome-heading"] {
+        box-shadow: none;
+        border: 1px solid #000000;
+    }
+
+    footer {
+        background-color: transparent;
+        color: #000000;
+    }
+}
