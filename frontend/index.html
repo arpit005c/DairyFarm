@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="DairyFarm - Smart milk production, farm records, expense and revenue management system."
+    >
+    <title>DairyFarm | Smart Dairy Management System</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>DairyFarm</h1>
+
+        <p>
+            Smart Milk Production, Farm Records, Expense & Revenue Management
+        </p>
+
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#farmers">Farmers</a></li>
+                <li><a href="#cattle">Cattle</a></li>
+                <li><a href="#milk-records">Milk Records</a></li>
+                <li><a href="#feed-records">Feed Records</a></li>
+                <li><a href="#expenses">Expenses</a></li>
+                <li><a href="#revenue">Revenue</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section aria-labelledby="welcome-heading">
+            <h2 id="welcome-heading">Welcome to DairyFarm</h2>
+
+            <p>
+                Manage farmers, cattle, milk production, feed records,
+                expenses, and revenue from one system.
+            </p>
+        </section>
+
+        <section aria-labelledby="modules-heading">
+            <h2 id="modules-heading">System Modules</h2>
+
+<article id="farmers">
+    <h3>Farmer Management</h3>
+
+    <p>
+        Manage farmer information and farmer-related records.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Farmer Information</legend>
+
+            <p>
+                <label for="full-name">Full Name:</label>
+                <input
+                    type="text"
+                    id="full-name"
+                    name="full_name"
+                    placeholder="Enter farmer's full name"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="phone">Phone Number:</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter phone number"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address"
+                >
+            </p>
+
+            <p>
+                <label for="address">Address:</label>
+                <textarea
+                    id="address"
+                    name="address"
+                    rows="4"
+                    cols="40"
+                    placeholder="Enter farmer's address"
+                ></textarea>
+            </p>
+
+            <p>
+                <button type="submit">Save Farmer</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+
+<article id="cattle">
+    <h3>Cattle Management</h3>
+
+    <p>
+        Maintain cattle information and associate cattle with farmers.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Cattle Information</legend>
+
+            <p>
+                <label for="cattle-farmer-id">Farmer ID:</label>
+                <input
+                    type="number"
+                    id="cattle-farmer-id"
+                    name="farmer_id"
+                    placeholder="Enter farmer ID"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="tag-number">Tag Number:</label>
+                <input
+                    type="text"
+                    id="tag-number"
+                    name="tag_number"
+                    placeholder="Enter cattle tag number"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="cattle-name">Cattle Name:</label>
+                <input
+                    type="text"
+                    id="cattle-name"
+                    name="name"
+                    placeholder="Enter cattle name"
+                >
+            </p>
+
+            <p>
+                <label for="breed">Breed:</label>
+                <input
+                    type="text"
+                    id="breed"
+                    name="breed"
+                    placeholder="Enter breed"
+                >
+            </p>
+
+            <p>
+                <label for="date-of-birth">Date of Birth:</label>
+                <input
+                    type="date"
+                    id="date-of-birth"
+                    name="date_of_birth"
+                >
+            </p>
+
+            <p>
+                <label for="cattle-status">Status:</label>
+                <select id="cattle-status" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </p>
+
+            <p>
+                <button type="submit">Save Cattle</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+
+<article id="milk-records">
+    <h3>Milk Records</h3>
+
+    <p>
+        Record and manage daily milk production.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Milk Production Record</legend>
+
+            <p>
+                <label for="milk-cattle-id">Cattle ID:</label>
+                <input
+                    type="number"
+                    id="milk-cattle-id"
+                    name="cattle_id"
+                    placeholder="Enter cattle ID"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="record-date">Record Date:</label>
+                <input
+                    type="date"
+                    id="record-date"
+                    name="record_date"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="session">Session:</label>
+                <select id="session" name="session" required>
+                    <option value="">Select session</option>
+                    <option value="morning">Morning</option>
+                    <option value="evening">Evening</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="quantity-litres">Quantity (Litres):</label>
+                <input
+                    type="number"
+                    id="quantity-litres"
+                    name="quantity_litres"
+                    placeholder="Enter milk quantity"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <button type="submit">Save Milk Record</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+
+<article id="feed-records">
+    <h3>Feed Records</h3>
+
+    <p>
+        Track cattle feed types, quantities, and costs.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Feed Record</legend>
+
+            <p>
+                <label for="feed-farmer-id">Farmer ID:</label>
+                <input
+                    type="number"
+                    id="feed-farmer-id"
+                    name="farmer_id"
+                    placeholder="Enter farmer ID"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="feed-cattle-id">Cattle ID:</label>
+                <input
+                    type="number"
+                    id="feed-cattle-id"
+                    name="cattle_id"
+                    placeholder="Enter cattle ID"
+                >
+            </p>
+
+            <p>
+                <label for="feed-record-date">Record Date:</label>
+                <input
+                    type="date"
+                    id="feed-record-date"
+                    name="record_date"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="feed-type">Feed Type:</label>
+                <input
+                    type="text"
+                    id="feed-type"
+                    name="feed_type"
+                    placeholder="Enter feed type"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="quantity-kg">Quantity (Kg):</label>
+                <input
+                    type="number"
+                    id="quantity-kg"
+                    name="quantity_kg"
+                    placeholder="Enter quantity"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="feed-cost">Cost:</label>
+                <input
+                    type="number"
+                    id="feed-cost"
+                    name="cost"
+                    placeholder="Enter feed cost"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <button type="submit">Save Feed Record</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+
+<article id="expenses">
+    <h3>Expense Management</h3>
+
+    <p>
+        Record and manage farm-related expenses.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Expense Information</legend>
+
+            <p>
+                <label for="expense-farmer-id">Farmer ID:</label>
+                <input
+                    type="number"
+                    id="expense-farmer-id"
+                    name="farmer_id"
+                    placeholder="Enter farmer ID"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="expense-date">Expense Date:</label>
+                <input
+                    type="date"
+                    id="expense-date"
+                    name="expense_date"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="expense-category">Category:</label>
+                <input
+                    type="text"
+                    id="expense-category"
+                    name="category"
+                    placeholder="Enter expense category"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="expense-amount">Amount:</label>
+                <input
+                    type="number"
+                    id="expense-amount"
+                    name="amount"
+                    placeholder="Enter expense amount"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="expense-description">Description:</label>
+                <textarea
+                    id="expense-description"
+                    name="description"
+                    rows="4"
+                    cols="40"
+                    placeholder="Enter expense description"
+                ></textarea>
+            </p>
+
+            <p>
+                <button type="submit">Save Expense</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+
+<article id="revenue">
+    <h3>Revenue Management</h3>
+
+    <p>
+        Track milk sales, quantities, prices, and revenue.
+    </p>
+
+    <form action="#" method="post">
+
+        <fieldset>
+            <legend>Revenue Information</legend>
+
+            <p>
+                <label for="revenue-farmer-id">Farmer ID:</label>
+                <input
+                    type="number"
+                    id="revenue-farmer-id"
+                    name="farmer_id"
+                    placeholder="Enter farmer ID"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="sale-date">Sale Date:</label>
+                <input
+                    type="date"
+                    id="sale-date"
+                    name="sale_date"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="revenue-quantity">Quantity (Litres):</label>
+                <input
+                    type="number"
+                    id="revenue-quantity"
+                    name="quantity_litres"
+                    placeholder="Enter quantity"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="price-per-litre">Price per Litre:</label>
+                <input
+                    type="number"
+                    id="price-per-litre"
+                    name="price_per_litre"
+                    placeholder="Enter price per litre"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="buyer-name">Buyer Name:</label>
+                <input
+                    type="text"
+                    id="buyer-name"
+                    name="buyer_name"
+                    placeholder="Enter buyer name"
+                >
+            </p>
+
+            <p>
+                <button type="submit">Save Revenue</button>
+                <button type="reset">Clear Form</button>
+            </p>
+
+        </fieldset>
+
+    </form>
+</article>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DairyFarm</p>
+    </footer>
+
+</body>
+</html>
