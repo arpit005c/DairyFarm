@@ -1,7 +1,6 @@
 /* =========================================================
    DairyFarm
-   Phase 9 — CSS3 Styling
-   Step 9.1 — Global CSS Foundation
+   Phase 9 — Clean CSS3 Styling
    ========================================================= */
 
 
@@ -12,7 +11,7 @@
 :root {
     --color-primary: #2f6f4e;
     --color-primary-dark: #24563d;
-    --color-secondary: #dfeee5;
+    --color-primary-light: #e8f3ec;
 
     --color-background: #f5f8f6;
     --color-surface: #ffffff;
@@ -23,7 +22,6 @@
     --color-border: #d9e2dc;
 
     --color-success: #2f855a;
-    --color-warning: #b7791f;
     --color-danger: #c53030;
 
     --shadow-sm: 0 2px 6px rgba(31, 41, 51, 0.08);
@@ -31,13 +29,14 @@
 
     --radius-sm: 6px;
     --radius-md: 10px;
+    --radius-lg: 14px;
 
-    --transition-fast: 160ms ease;
+    --transition: 160ms ease;
 }
 
 
 /* ---------------------------------------------------------
-   2. Global Reset / Box Model
+   2. Global Reset
    --------------------------------------------------------- */
 
 *,
@@ -46,15 +45,9 @@
     box-sizing: border-box;
 }
 
-
-/* ---------------------------------------------------------
-   3. Document
-   --------------------------------------------------------- */
-
 html {
     scroll-behavior: smooth;
 }
-
 
 body {
     margin: 0;
@@ -74,7 +67,7 @@ body {
 
 
 /* ---------------------------------------------------------
-   4. Basic Typography
+   3. Typography
    --------------------------------------------------------- */
 
 h1,
@@ -84,41 +77,40 @@ h3 {
     line-height: 1.25;
 }
 
-
 h1 {
     font-size: 2.25rem;
 }
-
 
 h2 {
     font-size: 1.75rem;
 }
 
-
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
 }
-
 
 p {
     margin-top: 0;
 }
 
-
 a {
     color: var(--color-primary);
+    text-decoration: none;
 }
 
+a:hover {
+    color: var(--color-primary-dark);
+}
+
+
+/* ---------------------------------------------------------
+   4. Images and Form Controls
+   --------------------------------------------------------- */
 
 img {
     max-width: 100%;
     height: auto;
 }
-
-
-/* ---------------------------------------------------------
-   5. Basic Form Inheritance
-   --------------------------------------------------------- */
 
 button,
 input,
@@ -129,7 +121,7 @@ textarea {
 
 
 /* ---------------------------------------------------------
-   6. Keyboard Focus
+   5. Keyboard Focus
    --------------------------------------------------------- */
 
 :focus-visible {
@@ -139,88 +131,111 @@ textarea {
 
 
 /* ---------------------------------------------------------
-   7. Page Header
+   6. Navigation
    --------------------------------------------------------- */
 
-header {
-    background-color: var(--color-primary);
-    color: var(--color-surface);
-    padding: 2rem 1.5rem;
-    box-shadow: var(--shadow-sm);
+.navbar {
+    min-height: 64px;
 }
 
-header h1 {
-    margin-bottom: 0.5rem;
+.navbar-brand {
+    color: var(--color-primary-dark) !important;
+    font-weight: 700;
+    font-size: 1.3rem;
 }
 
-header p {
-    margin-bottom: 1.5rem;
-}
+.navbar-nav .nav-link {
+    color: var(--color-text);
+    font-weight: 500;
 
-
-/* ---------------------------------------------------------
-   8. Navigation
-   --------------------------------------------------------- */
-
-nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav a {
-    display: inline-block;
-    color: var(--color-surface);
-    text-decoration: none;
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--radius-sm);
     transition:
-        background-color var(--transition-fast),
-        transform var(--transition-fast);
+        color var(--transition),
+        background-color var(--transition);
 }
 
-nav a:hover {
-    background-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-}
-
-nav a:focus-visible {
-    outline-color: var(--color-surface);
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: var(--color-primary);
 }
 
 
 /* ---------------------------------------------------------
-   9. Main Layout
+   7. Hero Header
+   --------------------------------------------------------- */
+
+header:not(.navbar) {
+    background: var(--color-primary);
+    color: var(--color-surface);
+
+    padding: 2.5rem 1.5rem;
+}
+
+header:not(.navbar) h1 {
+    max-width: 1200px;
+
+    margin: 0 auto 0.5rem;
+
+    font-size: 2.5rem;
+}
+
+header:not(.navbar) p {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.92);
+}
+
+
+/* ---------------------------------------------------------
+   8. Main Container
    --------------------------------------------------------- */
 
 main {
-    width: min(1200px, 92%);
-    margin: 0 auto;
-    padding: 2.5rem 0;
-}
+    width: min(1200px, calc(100% - 2rem));
 
-section {
-    margin-bottom: 2.5rem;
+    margin: 2.5rem auto;
 }
 
 
 /* ---------------------------------------------------------
-   10. Welcome Section
+   9. Welcome Section
    --------------------------------------------------------- */
 
-section[aria-labelledby="welcome-heading"] {
+main > section:first-child {
     background-color: var(--color-surface);
-    padding: 2rem;
+
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
+
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+
     box-shadow: var(--shadow-sm);
 }
 
-section[aria-labelledby="welcome-heading"] h2 {
-    color: var(--color-primary-dark);
+main > section:first-child h2 {
+    margin-bottom: 0.5rem;
+}
+
+main > section:first-child p {
+    margin-bottom: 0;
+
+    color: var(--color-muted);
+}
+
+
+/* ---------------------------------------------------------
+   10. System Modules
+   Bootstrap handles the responsive grid.
+   --------------------------------------------------------- */
+
+section[aria-labelledby="modules-heading"] {
+    width: 100%;
+}
+
+section[aria-labelledby="modules-heading"] > h2 {
+    margin-bottom: 1.5rem;
 }
 
 
@@ -228,123 +243,117 @@ section[aria-labelledby="welcome-heading"] h2 {
    11. Module Cards
    --------------------------------------------------------- */
 
-section[aria-labelledby="modules-heading"] {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-}
+section[aria-labelledby="modules-heading"] .card {
+    height: 100%;
 
-section[aria-labelledby="modules-heading"] > h2 {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
-}
-
-article {
     background-color: var(--color-surface);
+
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+
     box-shadow: var(--shadow-sm);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
 }
 
-article h3 {
-    color: var(--color-primary);
+section[aria-labelledby="modules-heading"] .card:hover {
+    transform: translateY(-3px);
+
+    border-color: #c5d5cb;
+
+    box-shadow: var(--shadow-md);
+}
+
+section[aria-labelledby="modules-heading"] .card h3 {
+    color: var(--color-primary-dark);
+
+    margin-bottom: 0.75rem;
+}
+
+section[aria-labelledby="modules-heading"] .card > p {
+    color: var(--color-muted);
+
+    margin-bottom: 1.25rem;
 }
 
 
 /* ---------------------------------------------------------
-   12. Footer
-   --------------------------------------------------------- */
-
-footer {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: var(--color-primary-dark);
-    color: var(--color-surface);
-    text-align: center;
-}
-
-footer p {
-    margin-bottom: 0;
-}
-
-
-/* ---------------------------------------------------------
-   13. Responsive Layout
-   --------------------------------------------------------- */
-
-@media (max-width: 768px) {
-    header {
-        padding: 1.5rem 1rem;
-    }
-
-    main {
-        width: min(94%, 600px);
-        padding: 2rem 0;
-    }
-
-    section[aria-labelledby="modules-heading"] {
-        grid-template-columns: 1fr;
-    }
-
-    section[aria-labelledby="modules-heading"] > h2 {
-        grid-column: auto;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 0.35rem;
-    }
-
-    nav a {
-        display: block;
-    }
-}
-
-/* ---------------------------------------------------------
-   14. Forms
+   12. Forms
    --------------------------------------------------------- */
 
 form {
-    margin-top: 1.5rem;
+    width: 100%;
 }
 
 fieldset {
+    min-width: 0;
+
     margin: 0;
-    padding: 1.5rem;
+    padding: 1.25rem;
+
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background-color: var(--color-background);
+
+    background-color: #fbfcfb;
 }
 
 legend {
+    width: auto;
+
     padding: 0 0.5rem;
+
     color: var(--color-primary-dark);
+
+    font-size: 0.95rem;
     font-weight: 700;
 }
 
+
+/* ---------------------------------------------------------
+   13. Form Fields
+   --------------------------------------------------------- */
+
 form p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+form p:last-child {
+    margin-bottom: 0;
 }
 
 label {
     display: block;
-    margin-bottom: 0.4rem;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--color-text);
+
     font-weight: 600;
+    font-size: 0.92rem;
 }
 
 input,
 select,
 textarea {
+    display: block;
+
     width: 100%;
-    padding: 0.7rem 0.8rem;
+    max-width: 100%;
+
+    padding: 0.65rem 0.75rem;
+
+    color: var(--color-text);
+    background-color: var(--color-surface);
+
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
-    background-color: var(--color-surface);
-    color: var(--color-text);
+
     transition:
-        border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
 
 textarea {
@@ -354,32 +363,40 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--color-muted);
+    color: #98a2b3;
 }
+
+
+/* ---------------------------------------------------------
+   14. Input States
+   --------------------------------------------------------- */
 
 input:hover,
 select:hover,
 textarea:hover {
-    border-color: var(--color-primary);
+    border-color: #aabdb1;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(47, 111, 78, 0.12);
+
+    box-shadow:
+        0 0 0 3px rgba(47, 111, 78, 0.12);
+
     outline: none;
 }
 
 
 /* ---------------------------------------------------------
-   15. Form Validation States
+   15. Validation States
    --------------------------------------------------------- */
 
-input:required:invalid,
-select:required:invalid,
-textarea:required:invalid {
-    border-color: var(--color-danger);
+input:required:invalid:not(:focus),
+select:required:invalid:not(:focus),
+textarea:required:invalid:not(:focus) {
+    border-color: var(--color-border);
 }
 
 input:required:valid,
@@ -390,19 +407,24 @@ textarea:required:valid {
 
 
 /* ---------------------------------------------------------
-   16. Form Buttons
+   16. Buttons
    --------------------------------------------------------- */
 
 button {
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
-    padding: 0.7rem 1.1rem;
+
+    padding: 0.65rem 1rem;
+
     cursor: pointer;
+
     font-weight: 600;
+
     transition:
-        background-color var(--transition-fast),
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast);
+        background-color var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
 }
 
 button[type="submit"] {
@@ -412,19 +434,24 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: var(--color-primary-dark);
+
     transform: translateY(-1px);
+
     box-shadow: var(--shadow-sm);
 }
 
 button[type="reset"] {
     margin-left: 0.5rem;
-    background-color: var(--color-secondary);
-    color: var(--color-text);
+
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+
     border-color: var(--color-border);
 }
 
 button[type="reset"]:hover {
     background-color: var(--color-border);
+
     transform: translateY(-1px);
 }
 
@@ -434,66 +461,81 @@ button:active {
 
 button:disabled {
     opacity: 0.6;
+
     cursor: not-allowed;
+
     transform: none;
 }
 
+
 /* ---------------------------------------------------------
-   17. Form Responsive Layout
+   17. Footer
    --------------------------------------------------------- */
 
-@media (min-width: 769px) {
-    form fieldset {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem 1.5rem;
-    }
+footer {
+    margin-top: 3rem;
 
-    form legend {
-        grid-column: 1 / -1;
-    }
+    padding: 1.5rem;
 
-    form fieldset > p {
-        margin: 0;
-    }
+    background-color: var(--color-primary-dark);
 
-    form fieldset > p:nth-last-child(1) {
-        grid-column: 1 / -1;
-    }
+    color: rgba(255, 255, 255, 0.9);
+
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
 }
 
 
 /* ---------------------------------------------------------
-   18. Small Screen Form Adjustments
+   18. Small Screens
    --------------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
+
+    main {
+        width: calc(100% - 1rem);
+
+        margin: 1.5rem auto;
+    }
+
+    main > section:first-child {
+        padding: 1.25rem;
+    }
+
+    header:not(.navbar) {
+        padding: 2rem 1rem;
+    }
+
+    header:not(.navbar) h1 {
+        font-size: 2rem;
+    }
+
     fieldset {
         padding: 1rem;
     }
 
-    input,
-    select,
-    textarea {
-        width: 100%;
-    }
-
     button {
         width: 100%;
+
         margin-bottom: 0.5rem;
     }
 
     button[type="reset"] {
         margin-left: 0;
     }
+
 }
 
 
 /* ---------------------------------------------------------
-   19. Reduced Motion Accessibility
+   19. Reduced Motion
    --------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+
     html {
         scroll-behavior: auto;
     }
@@ -501,92 +543,36 @@ button:disabled {
     *,
     *::before,
     *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
+        transition: none !important;
+        animation: none !important;
     }
-}
 
-/* ---------------------------------------------------------
-   20. Utility & Feedback States
-   --------------------------------------------------------- */
-
-.form-message {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.form-message.error {
-    color: var(--color-danger);
-}
-
-.form-message.success {
-    color: var(--color-success);
-}
-
-.input-error {
-    border-color: var(--color-danger) !important;
-}
-
-.input-success {
-    border-color: var(--color-success) !important;
 }
 
 
 /* ---------------------------------------------------------
-   21. Module Spacing
-   --------------------------------------------------------- */
-
-article + article {
-    margin-top: 0;
-}
-
-article p:last-child {
-    margin-bottom: 0;
-}
-
-
-/* ---------------------------------------------------------
-   22. Better Touch Targets
-   --------------------------------------------------------- */
-
-@media (max-width: 768px) {
-    nav a,
-    button {
-        min-height: 44px;
-    }
-}
-
-
-/* ---------------------------------------------------------
-   23. Print Styles
+   20. Print
    --------------------------------------------------------- */
 
 @media print {
-    header {
-        background-color: transparent;
-        color: #000000;
-        box-shadow: none;
+
+    .navbar,
+    button {
+        display: none !important;
     }
 
-    nav,
-    button {
-        display: none;
+    body {
+        background: #ffffff;
     }
 
     main {
         width: 100%;
-        padding: 0;
+        margin: 0;
     }
 
-    article,
-    section[aria-labelledby="welcome-heading"] {
+    section[aria-labelledby="modules-heading"] .card {
         box-shadow: none;
-        border: 1px solid #000000;
+        break-inside: avoid;
     }
 
-    footer {
-        background-color: transparent;
-        color: #000000;
-    }
 }
