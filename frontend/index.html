@@ -129,7 +129,7 @@
                         Manage farmer information and farmer-related records.
                     </p>
 
-                    <form action="#" method="post">
+                    <form id="farmer-form" action="#" method="post" novalidate>
 
                         <fieldset>
 
@@ -406,6 +406,7 @@
                                     id="feed-cattle-id"
                                     name="cattle_id"
                                     placeholder="Enter cattle ID"
+                                    required
                                 >
                             </p>
 
@@ -542,6 +543,7 @@
                                     rows="4"
                                     cols="40"
                                     placeholder="Enter expense description"
+                                    required
                                 ></textarea>
                             </p>
 
@@ -632,6 +634,7 @@
                                     id="buyer-name"
                                     name="buyer_name"
                                     placeholder="Enter buyer name"
+                                    required
                                 >
                             </p>
 
@@ -658,6 +661,6 @@
     <footer>
         <p>&copy; 2026 DairyFarm</p>
     </footer>
-
+<script src="js/app.js" defer></script>
 </body>
 </html>
