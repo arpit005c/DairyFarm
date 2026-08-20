@@ -45,6 +45,11 @@ class RevenueService:
         if farmer_id <= 0:
             raise ValidationError("Farmer ID must be a positive integer.")
 
+        if sale_date is not None and isinstance(sale_date, str):
+            if not sale_date.strip():
+                raise ValidationError("Sale date cannot be empty.")
+            sale_date = sale_date.strip()
+
         if quantity_litres <= 0:
             raise ValidationError("Quantity must be greater than zero.")
 
@@ -77,6 +82,11 @@ class RevenueService:
 
         if farmer_id <= 0:
             raise ValidationError("Farmer ID must be a positive integer.")
+
+        if sale_date is not None and isinstance(sale_date, str):
+            if not sale_date.strip():
+                raise ValidationError("Sale date cannot be empty.")
+            sale_date = sale_date.strip()
 
         if quantity_litres <= 0:
             raise ValidationError("Quantity must be greater than zero.")

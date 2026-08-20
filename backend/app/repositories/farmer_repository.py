@@ -3,6 +3,7 @@ from typing import Any
 from psycopg.rows import dict_row
 
 from backend.app.db.connection import get_connection
+from backend.app.repositories.utils import handle_db_errors
 
 
 class FarmerRepository:
@@ -51,6 +52,7 @@ class FarmerRepository:
                 return cursor.fetchone()
 
     @staticmethod
+    @handle_db_errors
     def create(
         full_name: str,
         phone: str,
@@ -87,6 +89,7 @@ class FarmerRepository:
                 return farmer
 
     @staticmethod
+    @handle_db_errors
     def update(
         farmer_id: int,
         full_name: str,
@@ -131,6 +134,7 @@ class FarmerRepository:
                 return farmer
 
     @staticmethod
+    @handle_db_errors
     def delete(farmer_id: int) -> bool:
         """Delete a farmer and return whether deletion occurred."""
         query = """

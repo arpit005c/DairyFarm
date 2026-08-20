@@ -1,5 +1,37 @@
-.venv/
-.env
+# Python
 __pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database/local files
+*.sqlite3
+
+# Python testing/cache
 .pytest_cache/
-*.pyc
+.mypy_cache/
+
+# Build/cache
+dist/
+build/

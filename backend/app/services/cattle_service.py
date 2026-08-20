@@ -59,6 +59,13 @@ class CattleService:
         if name is not None:
             name = name.strip() or None
 
+        if date_of_birth is not None and isinstance(date_of_birth, str):
+            if not date_of_birth.strip():
+                raise ValidationError("Cattle date of birth cannot be empty.")
+            date_of_birth = date_of_birth.strip()
+
+
+
         if breed is not None:
             breed = breed.strip() or None
 
@@ -104,6 +111,11 @@ class CattleService:
 
         if name is not None:
             name = name.strip() or None
+
+        if date_of_birth is not None and isinstance(date_of_birth, str):
+            if not date_of_birth.strip():
+                raise ValidationError("Cattle date of birth cannot be empty.")
+            date_of_birth = date_of_birth.strip()
 
         if breed is not None:
             breed = breed.strip() or None

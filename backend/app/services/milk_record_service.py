@@ -52,6 +52,11 @@ class MilkRecordService:
                 "Cattle ID must be a positive integer."
             )
 
+        if record_date is not None and isinstance(record_date, str):
+            if not record_date.strip():
+                raise ValidationError("Milk record date cannot be empty.")
+            record_date = record_date.strip()
+
         if not session or not session.strip():
             raise ValidationError("Milk session is required.")
 
@@ -87,6 +92,11 @@ class MilkRecordService:
             raise ValidationError(
                 "Cattle ID must be a positive integer."
             )
+
+        if record_date is not None and isinstance(record_date, str):
+            if not record_date.strip():
+                raise ValidationError("Milk record date cannot be empty.")
+            record_date = record_date.strip()
 
         if not session or not session.strip():
             raise ValidationError("Milk session is required.")

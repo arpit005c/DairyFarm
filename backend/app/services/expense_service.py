@@ -45,6 +45,11 @@ class ExpenseService:
         if farmer_id <= 0:
             raise ValidationError("Farmer ID must be a positive integer.")
 
+        if expense_date is not None and isinstance(expense_date, str):
+            if not expense_date.strip():
+                raise ValidationError("Expense date cannot be empty.")
+            expense_date = expense_date.strip()
+
         if not category or not category.strip():
             raise ValidationError("Expense category is required.")
 
@@ -79,6 +84,11 @@ class ExpenseService:
 
         if farmer_id <= 0:
             raise ValidationError("Farmer ID must be a positive integer.")
+
+        if expense_date is not None and isinstance(expense_date, str):
+            if not expense_date.strip():
+                raise ValidationError("Expense date cannot be empty.")
+            expense_date = expense_date.strip()
 
         if not category or not category.strip():
             raise ValidationError("Expense category is required.")

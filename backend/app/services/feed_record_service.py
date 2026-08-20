@@ -59,6 +59,11 @@ class FeedRecordService:
                 "Cattle ID must be a positive integer."
             )
 
+        if record_date is not None and isinstance(record_date, str):
+            if not record_date.strip():
+                raise ValidationError("Feed record date cannot be empty.")
+            record_date = record_date.strip()
+
         if not feed_type or not feed_type.strip():
             raise ValidationError("Feed type is required.")
 
@@ -108,6 +113,11 @@ class FeedRecordService:
             raise ValidationError(
                 "Cattle ID must be a positive integer."
             )
+
+        if record_date is not None and isinstance(record_date, str):
+            if not record_date.strip():
+                raise ValidationError("Feed record date cannot be empty.")
+            record_date = record_date.strip()
 
         if not feed_type or not feed_type.strip():
             raise ValidationError("Feed type is required.")

@@ -3,664 +3,633 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta
-        name="description"
-        content="DairyFarm - Smart milk production, farm records, expense and revenue management system."
-    >
+    <meta name="description" content="DairyFarm - Smart milk production, farm records, expense and revenue management system.">
     <title>DairyFarm | Smart Dairy Management System</title>
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    >
-
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-></script>
 </head>
-
 <body>
 
-  <header>
-    <nav class="navbar navbar-expand-lg bg-white border-bottom">
-        <div class="container">
-
-            <a class="navbar-brand fw-bold" href="index.html">
-                DairyFarm
-            </a>
-
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#mainNavigation"
-                aria-controls="mainNavigation"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="mainNavigation">
-
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#farmers">
-                            Farmers
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#cattle">
-                            Cattle
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#milk-records">
-                            Milk Records
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#feed-records">
-                            Feed Records
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#expenses">
-                            Expenses
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#revenue">
-                            Revenue
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-white border-end d-flex flex-column p-3 position-fixed h-100" style="width: 250px; z-index: 1040;">
+        <a href="#dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none nav-brand">
+            <span class="fs-4 fw-bold df-brand-color"><i class="bi bi-moisture"></i> DairyFarm</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto nav-spa" id="sidebar-nav">
+            <li class="nav-item mb-1">
+                <a href="#dashboard" class="nav-link active" data-view="dashboard-view">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#farmers" class="nav-link link-dark" data-view="farmers-view">
+                    <i class="bi bi-people me-2"></i> Farmers
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#cattle" class="nav-link link-dark" data-view="cattle-view">
+                    <i class="bi bi-hash me-2"></i> Cattle
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#milk-records" class="nav-link link-dark" data-view="milk-view">
+                    <i class="bi bi-droplet me-2"></i> Milk Production
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#feed-records" class="nav-link link-dark" data-view="feed-view">
+                    <i class="bi bi-basket me-2"></i> Feed Records
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#expenses" class="nav-link link-dark" data-view="expenses-view">
+                    <i class="bi bi-receipt me-2"></i> Expenses
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#revenue" class="nav-link link-dark" data-view="revenue-view">
+                    <i class="bi bi-cash-coin me-2"></i> Revenue
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="small text-muted text-center">
+            &copy; 2026 DairyFarm
         </div>
     </nav>
 
-    <div class="container py-4">
-        <h1>DairyFarm</h1>
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="flex-grow-1 bg-light w-100" style="margin-left: 250px;">
+        <!-- Top Navbar for Mobile Toggle -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-3 d-md-none position-sticky top-0" style="z-index: 1030;">
+            <button class="btn btn-outline-secondary btn-sm" id="menu-toggle">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+            <span class="navbar-brand ms-2 fw-bold df-brand-color">DairyFarm</span>
+        </nav>
 
-        <p>
-            Smart Milk Production, Farm Records, Expense & Revenue Management
-        </p>
+        <main class="container-fluid p-4 p-md-5" id="main-content">
+            <!-- Toast Container -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1060;" id="toast-container">
+            </div>
+
+            <!-- DASHBOARD VIEW -->
+            <section id="dashboard-view" class="view-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Dashboard Overview</h2>
+                    <button class="btn btn-sm btn-outline-secondary shadow-sm" onclick="loadAnalytics()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+                
+                <div class="row g-4 mb-4" id="kpi-container">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card kpi-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted mb-1 small text-uppercase fw-bold">Total Milk</p>
+                                        <h3 class="mb-0 fw-bold" id="kpi-milk">...</h3>
+                                    </div>
+                                    <div class="p-2 bg-primary bg-opacity-10 rounded text-primary fs-4 lh-1"><i class="bi bi-droplet"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card kpi-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted mb-1 small text-uppercase fw-bold">Total Revenue</p>
+                                        <h3 class="mb-0 fw-bold text-success" id="kpi-revenue">...</h3>
+                                    </div>
+                                    <div class="p-2 bg-success bg-opacity-10 rounded text-success fs-4 lh-1"><i class="bi bi-cash"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card kpi-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted mb-1 small text-uppercase fw-bold">Total Expenses</p>
+                                        <h3 class="mb-0 fw-bold text-danger" id="kpi-expenses">...</h3>
+                                    </div>
+                                    <div class="p-2 bg-danger bg-opacity-10 rounded text-danger fs-4 lh-1"><i class="bi bi-arrow-down-right-circle"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="card kpi-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="text-muted mb-1 small text-uppercase fw-bold">Net Profit</p>
+                                        <h3 class="mb-0 fw-bold text-info" id="kpi-profit">...</h3>
+                                    </div>
+                                    <div class="p-2 bg-info bg-opacity-10 rounded text-info fs-4 lh-1"><i class="bi bi-graph-up-arrow"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-lg-8">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white border-0 pt-4 pb-0">
+                                <h5 class="fw-bold">Milk Production Trend</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="milkChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white border-0 pt-4 pb-0">
+                                <h5 class="fw-bold">Financial Overview</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="financeChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FARMERS VIEW -->
+            <section id="farmers-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Farmers</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#farmerModal">
+                        <i class="bi bi-plus-lg"></i> Add Farmer
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="farmers-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>NAME</th>
+                                        <th>PHONE</th>
+                                        <th>EMAIL</th>
+                                        <th>ADDRESS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="5" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading farmers...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CATTLE VIEW -->
+            <section id="cattle-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Cattle</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#cattleModal">
+                        <i class="bi bi-plus-lg"></i> Add Cattle
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="cattle-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>TAG</th>
+                                        <th>NAME</th>
+                                        <th>BREED</th>
+                                        <th>GENDER</th>
+                                        <th>STATUS</th>
+                                        <th>FARMER ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="7" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading cattle...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MILK RECORDS VIEW -->
+            <section id="milk-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Milk Production</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#milkModal">
+                        <i class="bi bi-plus-lg"></i> Add Record
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="milk-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>DATE</th>
+                                        <th>SESSION</th>
+                                        <th>QUANTITY (L)</th>
+                                        <th>CATTLE ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="5" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading records...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEED RECORDS VIEW -->
+            <section id="feed-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Feed Records</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#feedModal">
+                        <i class="bi bi-plus-lg"></i> Add Feed Record
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="feed-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>DATE</th>
+                                        <th>FEED TYPE</th>
+                                        <th>QUANTITY (KG)</th>
+                                        <th>COST (₹)</th>
+                                        <th>CATTLE ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="6" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading records...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXPENSES VIEW -->
+            <section id="expenses-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Expenses</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#expenseModal">
+                        <i class="bi bi-plus-lg"></i> Add Expense
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="expenses-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>DATE</th>
+                                        <th>CATEGORY</th>
+                                        <th>AMOUNT (₹)</th>
+                                        <th>DESCRIPTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="5" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading expenses...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REVENUE VIEW -->
+            <section id="revenue-view" class="view-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">Revenue</h2>
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#revenueModal">
+                        <i class="bi bi-plus-lg"></i> Add Revenue
+                    </button>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="revenue-table">
+                                <thead class="table-light text-muted small">
+                                    <tr>
+                                        <th class="ps-4">ID</th>
+                                        <th>DATE</th>
+                                        <th>QUANTITY (L)</th>
+                                        <th>PRICE/L (₹)</th>
+                                        <th>BUYER</th>
+                                        <th>AMOUNT (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="6" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading revenue...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
     </div>
-</header>
+</div>
 
-    <main>
+<!-- MODALS -->
 
-        <section aria-labelledby="welcome-heading">
-            <h2 id="welcome-heading">Welcome to DairyFarm</h2>
-
-            <p>
-                Manage farmers, cattle, milk production, feed records,
-                expenses, and revenue from one system.
-            </p>
-        </section>
-
-    <section aria-labelledby="modules-heading">
-
-    <h2 id="modules-heading">System Modules</h2>
-
-    <div class="row g-4">
-
-        <!-- Farmer Management -->
-        <article id="farmers" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Farmer Management</h3>
-
-                    <p class="card-text">
-                        Manage farmer information and farmer-related records.
-                    </p>
-
-                    <form id="farmer-form" action="#" method="post" novalidate>
-
-                        <fieldset>
-
-                            <legend>Farmer Information</legend>
-
-                            <p>
-                                <label for="full-name">Full Name:</label>
-                                <input
-                                    type="text"
-                                    id="full-name"
-                                    name="full_name"
-                                    placeholder="Enter farmer's full name"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="phone">Phone Number:</label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    placeholder="Enter phone number"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="email">Email:</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    placeholder="Enter email address"
-                                >
-                            </p>
-
-                            <p>
-                                <label for="address">Address:</label>
-                                <textarea
-                                    id="address"
-                                    name="address"
-                                    rows="4"
-                                    cols="40"
-                                    placeholder="Enter farmer's address"
-                                ></textarea>
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Farmer</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
+<!-- Farmer Modal -->
+<div class="modal fade" id="farmerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add New Farmer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="farmer-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">FULL NAME</label>
+                <input type="text" class="form-control form-control-sm" name="full_name" placeholder="John Doe" required>
             </div>
-        </article>
-
-
-        <!-- Cattle Management -->
-        <article id="cattle" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Cattle Management</h3>
-
-                    <p class="card-text">
-                        Maintain cattle information and associate cattle with farmers.
-                    </p>
-
-                    <form action="#" method="post">
-
-                        <fieldset>
-
-                            <legend>Cattle Information</legend>
-
-                            <p>
-                                <label for="cattle-farmer-id">Farmer ID:</label>
-                                <input
-                                    type="number"
-                                    id="cattle-farmer-id"
-                                    name="farmer_id"
-                                    placeholder="Enter farmer ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="tag-number">Tag Number:</label>
-                                <input
-                                    type="text"
-                                    id="tag-number"
-                                    name="tag_number"
-                                    placeholder="Enter cattle tag number"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="gender">Gender:</label>
-                                <select id="gender" name="gender" required>
-                                    <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </p>
-
-                            <p>
-                                <label for="cattle-name">Cattle Name:</label>
-                                <input
-                                    type="text"
-                                    id="cattle-name"
-                                    name="name"
-                                    placeholder="Enter cattle name"
-                                >
-                            </p>
-
-                            <p>
-                                <label for="breed">Breed:</label>
-                                <input
-                                    type="text"
-                                    id="breed"
-                                    name="breed"
-                                    placeholder="Enter breed"
-                                >
-                            </p>
-
-                            <p>
-                                <label for="date-of-birth">Date of Birth:</label>
-                                <input
-                                    type="date"
-                                    id="date-of-birth"
-                                    name="date_of_birth"
-                                >
-                            </p>
-
-                            <p>
-                                <label for="cattle-status">Status:</label>
-                                <select id="cattle-status" name="status">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Cattle</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">PHONE NUMBER</label>
+                <input type="tel" class="form-control form-control-sm" name="phone" placeholder="9876543210" required>
             </div>
-        </article>
-
-
-        <!-- Milk Records -->
-        <article id="milk-records" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Milk Records</h3>
-
-                    <p class="card-text">
-                        Record and manage daily milk production.
-                    </p>
-
-                    <form action="#" method="post">
-
-                        <fieldset>
-
-                            <legend>Milk Production Record</legend>
-
-                            <p>
-                                <label for="milk-cattle-id">Cattle ID:</label>
-                                <input
-                                    type="number"
-                                    id="milk-cattle-id"
-                                    name="cattle_id"
-                                    placeholder="Enter cattle ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="record-date">Record Date:</label>
-                                <input
-                                    type="date"
-                                    id="record-date"
-                                    name="record_date"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="session">Session:</label>
-                                <select id="session" name="session" required>
-                                    <option value="">Select session</option>
-                                    <option value="morning">Morning</option>
-                                    <option value="evening">Evening</option>
-                                </select>
-                            </p>
-
-                            <p>
-                                <label for="quantity-litres">Quantity (Litres):</label>
-                                <input
-                                    type="number"
-                                    id="quantity-litres"
-                                    name="quantity_litres"
-                                    placeholder="Enter milk quantity"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Milk Record</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">EMAIL</label>
+                <input type="email" class="form-control form-control-sm" name="email" placeholder="name@example.com">
             </div>
-        </article>
-
-
-        <!-- Feed Records -->
-        <article id="feed-records" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Feed Records</h3>
-
-                    <p class="card-text">
-                        Track cattle feed types, quantities, and costs.
-                    </p>
-
-                    <form action="#" method="post">
-
-                        <fieldset>
-
-                            <legend>Feed Record</legend>
-
-                            <p>
-                                <label for="feed-farmer-id">Farmer ID:</label>
-                                <input
-                                    type="number"
-                                    id="feed-farmer-id"
-                                    name="farmer_id"
-                                    placeholder="Enter farmer ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="feed-cattle-id">Cattle ID:</label>
-                                <input
-                                    type="number"
-                                    id="feed-cattle-id"
-                                    name="cattle_id"
-                                    placeholder="Enter cattle ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="feed-record-date">Record Date:</label>
-                                <input
-                                    type="date"
-                                    id="feed-record-date"
-                                    name="record_date"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="feed-type">Feed Type:</label>
-                                <input
-                                    type="text"
-                                    id="feed-type"
-                                    name="feed_type"
-                                    placeholder="Enter feed type"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="quantity-kg">Quantity (Kg):</label>
-                                <input
-                                    type="number"
-                                    id="quantity-kg"
-                                    name="quantity_kg"
-                                    placeholder="Enter quantity"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="feed-cost">Cost:</label>
-                                <input
-                                    type="number"
-                                    id="feed-cost"
-                                    name="cost"
-                                    placeholder="Enter feed cost"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Feed Record</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">ADDRESS</label>
+                <textarea class="form-control form-control-sm" name="address" rows="2" placeholder="Enter full address"></textarea>
             </div>
-        </article>
-
-
-        <!-- Expense Management -->
-        <article id="expenses" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Expense Management</h3>
-
-                    <p class="card-text">
-                        Record and manage farm-related expenses.
-                    </p>
-
-                    <form action="#" method="post">
-
-                        <fieldset>
-
-                            <legend>Expense Information</legend>
-
-                            <p>
-                                <label for="expense-farmer-id">Farmer ID:</label>
-                                <input
-                                    type="number"
-                                    id="expense-farmer-id"
-                                    name="farmer_id"
-                                    placeholder="Enter farmer ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="expense-date">Expense Date:</label>
-                                <input
-                                    type="date"
-                                    id="expense-date"
-                                    name="expense_date"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="expense-category">Category:</label>
-                                <input
-                                    type="text"
-                                    id="expense-category"
-                                    name="category"
-                                    placeholder="Enter expense category"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="expense-amount">Amount:</label>
-                                <input
-                                    type="number"
-                                    id="expense-amount"
-                                    name="amount"
-                                    placeholder="Enter expense amount"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="expense-description">Description:</label>
-                                <textarea
-                                    id="expense-description"
-                                    name="description"
-                                    rows="4"
-                                    cols="40"
-                                    placeholder="Enter expense description"
-                                    required
-                                ></textarea>
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Expense</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Farmer</button>
             </div>
-        </article>
-
-
-        <!-- Revenue Management -->
-        <article id="revenue" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">Revenue Management</h3>
-
-                    <p class="card-text">
-                        Track milk sales, quantities, prices, and revenue.
-                    </p>
-
-                    <form action="#" method="post">
-
-                        <fieldset>
-
-                            <legend>Revenue Information</legend>
-
-                            <p>
-                                <label for="revenue-farmer-id">Farmer ID:</label>
-                                <input
-                                    type="number"
-                                    id="revenue-farmer-id"
-                                    name="farmer_id"
-                                    placeholder="Enter farmer ID"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="sale-date">Sale Date:</label>
-                                <input
-                                    type="date"
-                                    id="sale-date"
-                                    name="sale_date"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="revenue-quantity">Quantity (Litres):</label>
-                                <input
-                                    type="number"
-                                    id="revenue-quantity"
-                                    name="quantity_litres"
-                                    placeholder="Enter quantity"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="price-per-litre">Price per Litre:</label>
-                                <input
-                                    type="number"
-                                    id="price-per-litre"
-                                    name="price_per_litre"
-                                    placeholder="Enter price per litre"
-                                    step="0.01"
-                                    min="0"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <label for="buyer-name">Buyer Name:</label>
-                                <input
-                                    type="text"
-                                    id="buyer-name"
-                                    name="buyer_name"
-                                    placeholder="Enter buyer name"
-                                    required
-                                >
-                            </p>
-
-                            <p>
-                                <button type="submit">Save Revenue</button>
-                                <button type="reset">Clear Form</button>
-                            </p>
-
-                        </fieldset>
-
-                    </form>
-
-                </div>
-
-            </div>
-        </article>
-
+          </form>
+      </div>
     </div>
+  </div>
+</div>
 
-</section>
+<!-- Cattle Modal -->
+<div class="modal fade" id="cattleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Cattle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="cattle-form" novalidate>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">FARMER ID</label>
+                    <input type="number" class="form-control form-control-sm" name="farmer_id" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">TAG NUMBER</label>
+                    <input type="text" class="form-control form-control-sm" name="tag_number" required>
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">GENDER</label>
+                    <select class="form-select form-select-sm" name="gender" required>
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">STATUS</label>
+                    <select class="form-select form-select-sm" name="status">
+                        <option value="active" selected>Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">NAME (OPTIONAL)</label>
+                <input type="text" class="form-control form-control-sm" name="name">
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">BREED</label>
+                    <input type="text" class="form-control form-control-sm" name="breed">
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">DATE OF BIRTH</label>
+                    <input type="date" class="form-control form-control-sm" name="date_of_birth">
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Cattle</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-    </main>
+<!-- Milk Modal -->
+<div class="modal fade" id="milkModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Milk Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="milk-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">CATTLE ID</label>
+                <input type="number" class="form-control form-control-sm" name="cattle_id" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">RECORD DATE</label>
+                <input type="date" class="form-control form-control-sm" name="record_date" required>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">SESSION</label>
+                    <select class="form-select form-select-sm" name="session" required>
+                        <option value="">Select session</option>
+                        <option value="morning">Morning</option>
+                        <option value="evening">Evening</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">QUANTITY (L)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="quantity_litres" required>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Record</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <footer>
-        <p>&copy; 2026 DairyFarm</p>
-    </footer>
-<script src="js/app.js" defer></script>
+<!-- Feed Modal -->
+<div class="modal fade" id="feedModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Feed Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="feed-form" novalidate>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">FARMER ID</label>
+                    <input type="number" class="form-control form-control-sm" name="farmer_id" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">CATTLE ID</label>
+                    <input type="number" class="form-control form-control-sm" name="cattle_id" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">RECORD DATE</label>
+                <input type="date" class="form-control form-control-sm" name="record_date" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">FEED TYPE</label>
+                <input type="text" class="form-control form-control-sm" name="feed_type" required>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">QUANTITY (KG)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="quantity_kg" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">COST (₹)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="cost" required>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Feed Record</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Expense Modal -->
+<div class="modal fade" id="expenseModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Expense</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="expense-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">FARMER ID</label>
+                <input type="number" class="form-control form-control-sm" name="farmer_id" required>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">EXPENSE DATE</label>
+                    <input type="date" class="form-control form-control-sm" name="expense_date" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">AMOUNT (₹)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="amount" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">CATEGORY</label>
+                <input type="text" class="form-control form-control-sm" name="category" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">DESCRIPTION</label>
+                <textarea class="form-control form-control-sm" name="description" rows="2" required></textarea>
+            </div>
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Expense</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Revenue Modal -->
+<div class="modal fade" id="revenueModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Revenue</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="revenue-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">FARMER ID</label>
+                <input type="number" class="form-control form-control-sm" name="farmer_id" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">SALE DATE</label>
+                <input type="date" class="form-control form-control-sm" name="sale_date" required>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">QUANTITY (L)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="quantity_litres" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small fw-bold mb-1">PRICE / L (₹)</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" name="price_per_litre" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold mb-1">BUYER NAME</label>
+                <input type="text" class="form-control form-control-sm" name="buyer_name" required>
+            </div>
+            <div class="d-flex justify-content-end mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-sm btn-light me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm">Save Revenue</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- App Logic -->
+<script src="js/app.js"></script>
 </body>
 </html>

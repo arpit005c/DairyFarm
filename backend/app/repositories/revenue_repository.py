@@ -3,6 +3,7 @@ from typing import Any
 from psycopg.rows import dict_row
 
 from backend.app.db.connection import get_connection
+from backend.app.repositories.utils import handle_db_errors
 
 
 class RevenueRepository:
@@ -73,6 +74,7 @@ class RevenueRepository:
                 return cursor.fetchall()
 
     @staticmethod
+    @handle_db_errors
     def create(
         farmer_id: int,
         sale_date: Any,
@@ -117,6 +119,7 @@ class RevenueRepository:
                 return revenue
 
     @staticmethod
+    @handle_db_errors
     def update(
         revenue_id: int,
         farmer_id: int,
@@ -163,6 +166,7 @@ class RevenueRepository:
                 return revenue
 
     @staticmethod
+    @handle_db_errors
     def delete(revenue_id: int) -> bool:
         """Delete a revenue record."""
         query = """

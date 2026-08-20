@@ -3,6 +3,7 @@ from typing import Any
 from psycopg.rows import dict_row
 
 from backend.app.db.connection import get_connection
+from backend.app.repositories.utils import handle_db_errors
 
 
 class FeedRecordRepository:
@@ -76,6 +77,7 @@ class FeedRecordRepository:
                 return cursor.fetchall()
 
     @staticmethod
+    @handle_db_errors
     def create(
         farmer_id: int,
         record_date: Any,
@@ -124,6 +126,7 @@ class FeedRecordRepository:
                 return record
 
     @staticmethod
+    @handle_db_errors
     def update(
         feed_record_id: int,
         farmer_id: int,
@@ -174,6 +177,7 @@ class FeedRecordRepository:
                 return record
 
     @staticmethod
+    @handle_db_errors
     def delete(feed_record_id: int) -> bool:
         """Delete a feed record."""
         query = """

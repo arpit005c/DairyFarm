@@ -3,6 +3,7 @@ from typing import Any
 from psycopg.rows import dict_row
 
 from backend.app.db.connection import get_connection
+from backend.app.repositories.utils import handle_db_errors
 
 
 class MilkRecordRepository:
@@ -70,6 +71,7 @@ class MilkRecordRepository:
                 return cursor.fetchall()
 
     @staticmethod
+    @handle_db_errors
     def create(
         cattle_id: int,
         record_date: Any,
@@ -110,6 +112,7 @@ class MilkRecordRepository:
                 return record
 
     @staticmethod
+    @handle_db_errors
     def update(
         milk_record_id: int,
         cattle_id: int,
@@ -152,6 +155,7 @@ class MilkRecordRepository:
                 return record
 
     @staticmethod
+    @handle_db_errors
     def delete(milk_record_id: int) -> bool:
         """Delete a milk record."""
         query = """

@@ -3,6 +3,7 @@ from typing import Any
 from psycopg.rows import dict_row
 
 from backend.app.db.connection import get_connection
+from backend.app.repositories.utils import handle_db_errors
 
 
 class ExpenseRepository:
@@ -73,6 +74,7 @@ class ExpenseRepository:
                 return cursor.fetchall()
 
     @staticmethod
+    @handle_db_errors
     def create(
         farmer_id: int,
         expense_date: Any,
@@ -117,6 +119,7 @@ class ExpenseRepository:
                 return expense
 
     @staticmethod
+    @handle_db_errors
     def update(
         expense_id: int,
         farmer_id: int,
@@ -163,6 +166,7 @@ class ExpenseRepository:
                 return expense
 
     @staticmethod
+    @handle_db_errors
     def delete(expense_id: int) -> bool:
         """Delete an expense."""
         query = """
