@@ -28,6 +28,24 @@ def check(condition, message):
     return True
 
 ts = int(time.time())
+
+def check_backend():
+    try:
+        print("Checking backend availability...")
+        res = get("/api/farmers")
+        if res.status_code == 200:
+            print("Backend is running.")
+            return True
+    except Exception as e:
+        pass
+    return False
+
+if not check_backend():
+    print(f"CRITICAL: Backend at {BASE_URL} is unreachable.")
+    print("Please start the backend server before running this simulation.")
+    import sys
+    sys.exit(1)
+
 print("Testing Farmer...")
 try:
     farmer_data = {

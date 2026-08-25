@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 from datetime import date
@@ -69,54 +70,121 @@ class DairyFarmAPIHandler(BaseHTTPRequestHandler):
         path = parsed_path.path
         method = self.command
 
+        import re
         try:
+            # --- FARMER ---
+            m_farmer = re.match(r'^/api/farmers(?:/(\d+))?/?$', path)
+            if m_farmer:
+                fid = m_farmer.group(1)
+                if method == 'GET' and not fid:
+                    return self.send_json_response(200, {"data": FarmerApplication.get_all()})
+                elif method == 'GET' and fid:
+                    return self.send_json_response(200, {"data": FarmerApplication.get_by_id(int(fid))})
+                elif method == 'POST' and not fid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, FarmerApplication.create(**body))
+                elif method == 'PUT' and fid:
+                    body = self.get_json_body()
+                    body.pop('farmer_id', None)
+                    return self.send_json_response(200, FarmerApplication.update(farmer_id=int(fid), **body))
+                elif method == 'DELETE' and fid:
+                    FarmerApplication.delete(farmer_id=int(fid))
+                    return self.send_json_response(200, {"success": True})
+
             # --- CATTLE ---
-            if path == '/api/cattle' and method == 'GET':
-                return self.send_json_response(200, {"data": CattleApplication.get_all()})
-            if path == '/api/cattle' and method == 'POST':
-                body = self.get_json_body()
-                res = CattleApplication.create(**body)
-                return self.send_json_response(201, res)
+            m_cattle = re.match(r'^/api/cattle(?:/(\d+))?/?$', path)
+            if m_cattle:
+                cid = m_cattle.group(1)
+                if method == 'GET' and not cid:
+                    return self.send_json_response(200, {"data": CattleApplication.get_all()})
+                elif method == 'GET' and cid:
+                    return self.send_json_response(200, {"data": CattleApplication.get_by_id(int(cid))})
+                elif method == 'POST' and not cid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, CattleApplication.create(**body))
+                elif method == 'PUT' and cid:
+                    body = self.get_json_body()
+                    body.pop('cattle_id', None)
+                    return self.send_json_response(200, CattleApplication.update(cattle_id=int(cid), **body))
+                elif method == 'DELETE' and cid:
+                    CattleApplication.delete(cattle_id=int(cid))
+                    return self.send_json_response(200, {"success": True})
             
             # --- MILK RECORDS ---
-            if path == '/api/milk-records' and method == 'GET':
-                return self.send_json_response(200, {"data": MilkRecordApplication.get_all()})
-            if path == '/api/milk-records' and method == 'POST':
-                body = self.get_json_body()
-                res = MilkRecordApplication.create(**body)
-                return self.send_json_response(201, res)
+            m_milk = re.match(r'^/api/milk-records(?:/(\d+))?/?$', path)
+            if m_milk:
+                mid = m_milk.group(1)
+                if method == 'GET' and not mid:
+                    return self.send_json_response(200, {"data": MilkRecordApplication.get_all()})
+                elif method == 'GET' and mid:
+                    return self.send_json_response(200, {"data": MilkRecordApplication.get_by_id(int(mid))})
+                elif method == 'POST' and not mid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, MilkRecordApplication.create(**body))
+                elif method == 'PUT' and mid:
+                    body = self.get_json_body()
+                    body.pop('milk_record_id', None)
+                    return self.send_json_response(200, MilkRecordApplication.update(milk_record_id=int(mid), **body))
+                elif method == 'DELETE' and mid:
+                    MilkRecordApplication.delete(milk_record_id=int(mid))
+                    return self.send_json_response(200, {"success": True})
                 
             # --- FEED RECORDS ---
-            if path == '/api/feed-records' and method == 'GET':
-                return self.send_json_response(200, {"data": FeedRecordApplication.get_all()})
-            if path == '/api/feed-records' and method == 'POST':
-                body = self.get_json_body()
-                res = FeedRecordApplication.create(**body)
-                return self.send_json_response(201, res)
+            m_feed = re.match(r'^/api/feed-records(?:/(\d+))?/?$', path)
+            if m_feed:
+                fid = m_feed.group(1)
+                if method == 'GET' and not fid:
+                    return self.send_json_response(200, {"data": FeedRecordApplication.get_all()})
+                elif method == 'GET' and fid:
+                    return self.send_json_response(200, {"data": FeedRecordApplication.get_by_id(int(fid))})
+                elif method == 'POST' and not fid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, FeedRecordApplication.create(**body))
+                elif method == 'PUT' and fid:
+                    body = self.get_json_body()
+                    body.pop('feed_record_id', None)
+                    return self.send_json_response(200, FeedRecordApplication.update(feed_record_id=int(fid), **body))
+                elif method == 'DELETE' and fid:
+                    FeedRecordApplication.delete(feed_record_id=int(fid))
+                    return self.send_json_response(200, {"success": True})
 
             # --- EXPENSES ---
-            if path == '/api/expenses' and method == 'GET':
-                return self.send_json_response(200, {"data": ExpenseApplication.get_all()})
-            if path == '/api/expenses' and method == 'POST':
-                body = self.get_json_body()
-                res = ExpenseApplication.create(**body)
-                return self.send_json_response(201, res)
+            m_exp = re.match(r'^/api/expenses(?:/(\d+))?/?$', path)
+            if m_exp:
+                eid = m_exp.group(1)
+                if method == 'GET' and not eid:
+                    return self.send_json_response(200, {"data": ExpenseApplication.get_all()})
+                elif method == 'GET' and eid:
+                    return self.send_json_response(200, {"data": ExpenseApplication.get_by_id(int(eid))})
+                elif method == 'POST' and not eid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, ExpenseApplication.create(**body))
+                elif method == 'PUT' and eid:
+                    body = self.get_json_body()
+                    body.pop('expense_id', None)
+                    return self.send_json_response(200, ExpenseApplication.update(expense_id=int(eid), **body))
+                elif method == 'DELETE' and eid:
+                    ExpenseApplication.delete(expense_id=int(eid))
+                    return self.send_json_response(200, {"success": True})
                 
             # --- REVENUE ---
-            if path == '/api/revenue' and method == 'GET':
-                return self.send_json_response(200, {"data": RevenueApplication.get_all()})
-            if path == '/api/revenue' and method == 'POST':
-                body = self.get_json_body()
-                res = RevenueApplication.create(**body)
-                return self.send_json_response(201, res)
-
-            # --- FARMER ---
-            if path == '/api/farmers' and method == 'GET':
-                return self.send_json_response(200, {"data": FarmerApplication.get_all()})
-            if path == '/api/farmers' and method == 'POST':
-                body = self.get_json_body()
-                res = FarmerApplication.create(**body)
-                return self.send_json_response(201, res)
+            m_rev = re.match(r'^/api/revenue(?:/(\d+))?/?$', path)
+            if m_rev:
+                rid = m_rev.group(1)
+                if method == 'GET' and not rid:
+                    return self.send_json_response(200, {"data": RevenueApplication.get_all()})
+                elif method == 'GET' and rid:
+                    return self.send_json_response(200, {"data": RevenueApplication.get_by_id(int(rid))})
+                elif method == 'POST' and not rid:
+                    body = self.get_json_body()
+                    return self.send_json_response(201, RevenueApplication.create(**body))
+                elif method == 'PUT' and rid:
+                    body = self.get_json_body()
+                    body.pop('revenue_id', None)
+                    return self.send_json_response(200, RevenueApplication.update(revenue_id=int(rid), **body))
+                elif method == 'DELETE' and rid:
+                    RevenueApplication.delete(revenue_id=int(rid))
+                    return self.send_json_response(200, {"success": True})
 
             # --- ANALYTICS ---
             if path == '/api/analytics' and method == 'GET':
@@ -153,7 +221,9 @@ class DairyFarmAPIHandler(BaseHTTPRequestHandler):
     def do_DELETE(self):
         self.route_request()
 
-def run(server_class=HTTPServer, handler_class=DairyFarmAPIHandler, port=8000):
+def run(server_class=HTTPServer, handler_class=DairyFarmAPIHandler, port=None):
+    if port is None:
+        port = int(os.environ.get('PORT', 8000))
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f"Starting API server on port {port}...")

@@ -1,5 +1,7 @@
 "use strict";
 
+const API_BASE_URL = window.DAIRYFARM_API_BASE_URL || "http://localhost:8000";
+
 document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------------------
     // SPA Navigation & UI State
@@ -116,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------------------
     window.loadAnalytics = async function() {
         try {
-            const response = await fetch('http://localhost:8000/api/analytics');
+            const response = await fetch(`${API_BASE_URL}/api/analytics`);
             if (!response.ok) throw new Error('Failed to load analytics');
             const data = await response.json();
             const summary = data.summary;
@@ -200,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tbody = document.querySelector(`#${tableBodyId} tbody`);
         try {
             tbody.innerHTML = `<tr><td colspan="${emptyCols}" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm me-2" role="status"></div> Loading...</td></tr>`;
-            const response = await fetch(`http://localhost:8000${url}`);
+            const response = await fetch(`${API_BASE_URL}${url}`);
             if (!response.ok) throw new Error('Failed to load data');
             const json = await response.json();
             const data = json.data || [];
@@ -223,8 +225,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${f.phone}</td>
                 <td>${f.email || '-'}</td>
                 <td>${f.address || '-'}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("farmerModal", ${JSON.stringify(f).replace(/'/g, "&apos;")}, "farmer_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/farmers/${f.farmer_id}", loadFarmers)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 5);
+        `, 6);
     }
 
     function loadCattle() {
@@ -237,8 +243,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td class="text-capitalize">${c.gender}</td>
                 <td><span class="badge ${c.status === 'active' ? 'bg-success' : 'bg-secondary'}">${c.status}</span></td>
                 <td>#${c.farmer_id}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("cattleModal", ${JSON.stringify(c).replace(/'/g, "&apos;")}, "cattle_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/cattle/${c.cattle_id}", loadCattle)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 7);
+        `, 8);
     }
 
     function loadMilkRecords() {
@@ -249,8 +259,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td class="text-capitalize">${m.session}</td>
                 <td class="fw-bold text-primary">${m.quantity_litres} L</td>
                 <td>#${m.cattle_id}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("milkModal", ${JSON.stringify(m).replace(/'/g, "&apos;")}, "milk_record_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/milk-records/${m.milk_record_id}", loadMilkRecords)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 5);
+        `, 6);
     }
 
     function loadFeedRecords() {
@@ -262,8 +276,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td class="fw-bold">${f.quantity_kg} kg</td>
                 <td class="text-danger fw-bold">${formatCurrency(f.cost)}</td>
                 <td>#${f.cattle_id || '-'}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("feedModal", ${JSON.stringify(f).replace(/'/g, "&apos;")}, "feed_record_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/feed-records/${f.feed_record_id}", loadFeedRecords)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 6);
+        `, 7);
     }
 
     function loadExpenses() {
@@ -274,8 +292,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td><span class="badge bg-light text-dark border">${e.category}</span></td>
                 <td class="text-danger fw-bold">${formatCurrency(e.amount)}</td>
                 <td class="text-truncate" style="max-width: 200px;" title="${e.description}">${e.description}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("expenseModal", ${JSON.stringify(e).replace(/'/g, "&apos;")}, "expense_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/expenses/${e.expense_id}", loadExpenses)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 5);
+        `, 6);
     }
 
     function loadRevenue() {
@@ -287,9 +309,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${formatCurrency(r.price_per_litre)}</td>
                 <td>${r.buyer_name}</td>
                 <td class="text-success fw-bold">${formatCurrency(r.amount || (r.quantity_litres * r.price_per_litre))}</td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-primary shadow-sm py-0 px-2 me-1" onclick='openEditModal("revenueModal", ${JSON.stringify(r).replace(/'/g, "&apos;")}, "revenue_id")'><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger shadow-sm py-0 px-2" onclick='confirmDelete("/api/revenue/${r.revenue_id}", loadRevenue)'><i class="bi bi-trash"></i></button>
+                </td>
             </tr>
-        `, 6);
+        `, 7);
     }
+
+    // Expose data loading functions to global scope for inline event handlers
+    window.loadFarmers = loadFarmers;
+    window.loadCattle = loadCattle;
+    window.loadMilkRecords = loadMilkRecords;
+    window.loadFeedRecords = loadFeedRecords;
+    window.loadExpenses = loadExpenses;
+    window.loadRevenue = loadRevenue;
 
     // -----------------------------------------
     // Form Submission & Validation Helpers
@@ -335,8 +369,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const data = getFormData(form);
-            const response = await fetch(`http://localhost:8000${url}`, {
-                method: 'POST',
+            const isEdit = !!form.dataset.editId;
+            const finalUrl = isEdit ? `${API_BASE_URL}${url}/${form.dataset.editId}` : `${API_BASE_URL}${url}`;
+            const method = isEdit ? 'PUT' : 'POST';
+
+            const response = await fetch(finalUrl, {
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
@@ -419,4 +457,90 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('feed-form')?.addEventListener('submit', e => handleFormSubmit(e, '/api/feed-records', validateFeed, loadFeedRecords, 'feedModal'));
     document.getElementById('expense-form')?.addEventListener('submit', e => handleFormSubmit(e, '/api/expenses', validateExpense, loadExpenses, 'expenseModal'));
     document.getElementById('revenue-form')?.addEventListener('submit', e => handleFormSubmit(e, '/api/revenue', validateRevenue, loadRevenue, 'revenueModal'));
+
+    // -----------------------------------------
+    // Global Actions (Edit/Delete)
+    // -----------------------------------------
+    window.openEditModal = function(modalId, record, idField) {
+        const modalEl = document.getElementById(modalId);
+        const form = modalEl.querySelector('form');
+        form.reset();
+        
+        for (const key in record) {
+            const input = form.elements[key];
+            if (input) {
+                input.value = record[key];
+            }
+        }
+        
+        form.dataset.editId = record[idField];
+        
+        const title = modalEl.querySelector('.modal-title');
+        if (title && !title.textContent.startsWith('Edit')) {
+            title.dataset.originalText = title.textContent;
+            title.textContent = 'Edit ' + title.textContent.replace('Add New ', '').replace('Add ', '');
+        }
+        
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    };
+
+    window.confirmDelete = function(url, reloadFn) {
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+        
+        const confirmBtn = document.getElementById('confirm-delete-btn');
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+        
+        newBtn.addEventListener('click', async () => {
+            const originalText = newBtn.innerHTML;
+            newBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>...';
+            newBtn.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}${url}`, { method: 'DELETE' });
+                if (!response.ok) {
+                    const errData = await response.json().catch(()=>({}));
+                    throw new Error(errData.error || `Error ${response.status}`);
+                }
+                showToast('Record deleted successfully!');
+                deleteModal.hide();
+                if (reloadFn) reloadFn();
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                newBtn.innerHTML = originalText;
+                newBtn.disabled = false;
+            }
+        });
+    };
+
+    // Modal Reset & Focus Logic
+    let lastFocusedElement = null;
+
+    document.querySelectorAll('.modal').forEach(m => {
+        m.addEventListener('show.bs.modal', function () {
+            lastFocusedElement = document.activeElement;
+        });
+
+        m.addEventListener('hidden.bs.modal', function () {
+            const form = this.querySelector('form');
+            if (form) {
+                form.reset();
+                delete form.dataset.editId;
+            }
+            const title = this.querySelector('.modal-title');
+            if (title && title.dataset.originalText) {
+                title.textContent = title.dataset.originalText;
+            }
+
+            // Safely restore focus to prevent aria-hidden warnings
+            if (lastFocusedElement && document.contains(lastFocusedElement)) {
+                lastFocusedElement.focus();
+            } else {
+                document.body.focus();
+            }
+            lastFocusedElement = null;
+        });
+    });
 });
