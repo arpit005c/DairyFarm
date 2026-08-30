@@ -5,24 +5,13 @@
 **Status:** ✅ Completed
 
 ### Milestones Achieved:
-1. **Backend HTTP Boundary Hardening**:
-   - Implemented dynamic routing for GET by ID, PUT, and DELETE operations.
-   - Fixed all hard-coded endpoints to use scalable path matching logic using the existing `BaseHTTPRequestHandler` standard library.
-2. **Comprehensive API Testing**:
-   - Added rigorous automated `pytest` suite for the `DairyFarmAPIHandler`.
-   - Verified the complete CRUD matrix (200 Collection, 200 Single Record, 201 Create, 200 Update, 200/204 Delete, 400 Validation, 404 Missing Record, 409 Duplicate, 500 Unexpected Error).
-   - Validated Analytics contract (`GET /api/analytics`) payload schema.
-3. **Frontend Integration & Configuration**:
-   - Added a configurable `API_BASE_URL` constant.
-   - Removed all hardcoded `http://localhost:8000` URLs.
-   - Implemented complete Edit/Update and Delete workflows, including reusable form generation and a global bootstrap confirmation modal for safe deletions.
-4. **Backend Port Configuration**:
-   - Configured `backend/app/main.py` to seamlessly accept `PORT` from environment variables, defaulting to `8000`.
-5. **Requirements Clean-up**:
-   - Removed UTF-16LE formatting issues and isolated `requirements.txt` to contain strictly primary dependencies (e.g., `psycopg[binary]`, `numpy`, `jupyter`, `streamlit`, `pytest`, `requests`) in standard UTF-8.
-6. **Hardened Test Automation**:
-   - Added `check_backend()` early-exit fail-fast logic to `test_manual_simulation.py` to prevent cascading failures if the backend API isn't available during simulation runs.
-   - Verified 100% `PASS` rates across `Farmer`, `Cattle`, `Milk`, `Feed`, `Expense`, and `Revenue` modules.
+1. **Backend HTTP Boundary Hardening**: Full CRUD routing (GET by ID, PUT, DELETE) for all 6 resource domains via regex path matching. PORT is configurable via `PORT` env var.
+2. **Comprehensive API Testing**: `pytest` suite covering CRUD matrix, error codes (400/404/409/500), and Analytics contract. **76 tests — all passing.**
+3. **Frontend Integration & Configuration**: Configurable `API_BASE_URL`, Edit/Delete modal workflows, no hardcoded `localhost` URLs.
+4. **Frontend Regression Fix**: Exposed `load*` functions to `window` scope; implemented robust `show/hidden.bs.modal` focus lifecycle with `document.contains` guard to eliminate `aria-hidden` accessibility warnings.
+5. **Requirements Clean-up**: `requirements.txt` rewritten as clean UTF-8 with direct dependencies only.
+6. **Hardened Test Automation**: Fail-fast `check_backend()` in `test_manual_simulation.py`. 100% PASS across all 6 modules.
+7. **Streamlit Sidebar Navigation**: Replaced static non-clickable nav items with functional `<a target="_blank">` links pointing to the existing Bootstrap SPA hash routes (`#farmers`, `#cattle`, `#milk`, `#feed`, `#expenses`). Dashboard remains the Streamlit analytics page. Settings marked "Coming Soon". `FRONTEND_URL` is configurable via environment variable. **No changes to `app.js`, `main.py`, or the SPA routing.**
 
 ### Next Steps:
-The core product is feature-complete for local operation. The application is signed-off for the next stage (e.g., Cloud Deployment or Beta User testing). All original project restrictions (no React, no ORMs, PostgreSQL reliance, Vanilla JS UI) were strictly upheld.
+Core local system is feature-complete and QA-signed for all two presentation surfaces (Bootstrap SPA + Streamlit Analytics). Ready for the next milestone (Cloud Deployment or Beta User testing).

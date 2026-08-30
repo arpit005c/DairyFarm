@@ -133,20 +133,46 @@ with st.sidebar:
     st.markdown("<p style='text-align: center; color: #64748b; margin-top: 0;'>Intelligence Dashboard</p>", unsafe_allow_html=True)
     st.divider()
     
-    # Non-clickable mock navigation for SaaS feel without scope creep
-    st.markdown("""
+    FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+    SPA = f"{FRONTEND_URL}/index.html"
+
+    # Sidebar navigation — Dashboard stays here; all other items open the Bootstrap SPA in a new tab
+    st.markdown(f"""
     <div style='color: #64748b; font-size: 0.9rem; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>Navigation</div>
-    <div style='padding: 10px 14px; background: #e2e8f0; border-radius: 8px; font-weight: 600; color: #0f172a; margin-bottom: 6px;'>📊 Dashboard</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>🧑‍🌾 Farmers</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>🐄 Cattle</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>🥛 Milk Production</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>🌾 Feed</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>💰 Financials</div>
-    <div style='padding: 10px 14px; color: #475569; margin-bottom: 6px; cursor: not-allowed; opacity: 0.7;'>⚙️ Settings</div>
+
+    <div style='padding: 10px 14px; background: #e2e8f0; border-radius: 8px; font-weight: 600; color: #0f172a; margin-bottom: 6px;'>
+        📊 Dashboard
+    </div>
+
+    <a href="{SPA}#farmers" target="_blank" style='display:block; padding: 10px 14px; color: #475569; margin-bottom: 6px; border-radius: 8px; text-decoration: none; transition: background 0.15s;' onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+        🧑‍🌾 Farmers
+    </a>
+
+    <a href="{SPA}#cattle" target="_blank" style='display:block; padding: 10px 14px; color: #475569; margin-bottom: 6px; border-radius: 8px; text-decoration: none;' onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+        🐄 Cattle
+    </a>
+
+    <a href="{SPA}#milk" target="_blank" style='display:block; padding: 10px 14px; color: #475569; margin-bottom: 6px; border-radius: 8px; text-decoration: none;' onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+        🥛 Milk Production
+    </a>
+
+    <a href="{SPA}#feed" target="_blank" style='display:block; padding: 10px 14px; color: #475569; margin-bottom: 6px; border-radius: 8px; text-decoration: none;' onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+        🌾 Feed
+    </a>
+
+    <a href="{SPA}#expenses" target="_blank" style='display:block; padding: 10px 14px; color: #475569; margin-bottom: 6px; border-radius: 8px; text-decoration: none;' onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+        💰 Financials
+    </a>
+
+    <div style='padding: 10px 14px; color: #94a3b8; margin-bottom: 6px; border-radius: 8px; cursor: not-allowed; display: flex; justify-content: space-between; align-items: center;'>
+        <span>⚙️ Settings</span>
+        <span style='font-size: 0.7rem; background: #e2e8f0; color: #64748b; padding: 2px 8px; border-radius: 99px; font-weight: 600;'>Coming Soon</span>
+    </div>
     """, unsafe_allow_html=True)
     
     st.divider()
     st.caption("Powered by Streamlit & PostgreSQL.")
+
 
 # --- HEADER ---
 st.markdown("<h1 style='margin-bottom: 4px;'>Farm Performance Overview</h1>", unsafe_allow_html=True)

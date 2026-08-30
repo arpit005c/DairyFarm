@@ -37,3 +37,4 @@ dist/
 build/
 
 docs/DairyFarm_Docs.zip
+demo_backup_*.sql
